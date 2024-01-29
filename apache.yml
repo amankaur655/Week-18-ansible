@@ -1,33 +1,31 @@
 ---
-- hosts: db 
-  become: yes
+- hosts: db
+  become: true
   gather_facts: 0
   tasks:
 
      - name: Update the system
        yum:
-         name: '*'
-         state: latest
+          name: '*'
+          state: latest
        tags:
-         - update
+          - update
      - name: Install httpd
        package:
-         name: httpd
-         state: present
+          name: httpd
+       state: present
        tags:
-         - install
+          - install
      - name: Start the httpd Daemon
        systemd:
-         name: httpd
-         state: started
-         enabled: yes
+          name: httpd
+       state: started
+          enabled: true
        tags:
-         - daemon
+          - daemon
      - name: Copy index file to target
        copy:
-         src: index.html
-         dest: /var/www/html/index.html
+          src: index.html
+      dest: /var/www/html/index.html
        tags:
-         - file_copy
-         
-
+          - file_copy
